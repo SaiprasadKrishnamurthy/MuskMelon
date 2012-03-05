@@ -1,0 +1,192 @@
+/* 
+    Document   : ReportCenterStyles
+    Created on : Oct 30, 2010, 3:32:30 PM
+    Author     : VisKay
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.headerStyle {
+    height:30px;
+    background-image: url("#{resource['images:ui-bg_gloss-wave_55_5c9ccc_500x100.png']}");
+    background-repeat: repeat-x;
+    text-align:right;
+    font-size: 20px;
+    color:black;
+    vertical-align: bottom;
+    font-family: Geneva,Arial,Helvetica,sans-serif;
+    padding-top: 10px;
+}
+
+.footerStyle {
+    height:30px;
+    background-color: lightsteelblue;
+    font-size:12px;
+    font-weight:bold;
+    color: #fff;
+    text-align:center;
+    vertical-align:middle;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.topMenuStyle {
+    height: 20px;
+}
+
+.alignTop {
+    vertical-align: top;
+}
+
+.alignMiddle {
+    vertical-align: middle;
+}
+
+.loginContentStyle {
+    vertical-align: middle;
+    width: 350px;
+    height: 150px;
+    position:absolute;
+    top:25%;
+    left:32%;
+}
+
+.panelGridAlignRight {
+    text-align: right !important;
+}
+
+.panelGridAlignLeft {
+    text-align: left;
+}
+
+.loginButtonGroup {
+    text-align: right !important;
+    width: 300px !important;
+}
+
+.loginButton {
+    font-family: Arial,Helvetica,sans-serif !important;
+    font-size: 0.85em !important;
+}
+
+.loginLabelStyle {
+    text-align:right;
+    font-family:sans-serif,Arial, Helvetica;
+    font-size:14px
+}
+
+.loginValueStyle {
+    width:200px;
+    text-align:left;
+    font-family:sans-serif,Arial, Helvetica;
+    font-size:12px
+}
+
+.reportOptionsCol1 {
+    width: 40%;
+    height: 100%;
+}
+
+.reportOptionsCol2 {
+    width: 40%;
+    height: 100%;
+}
+
+.reportOptionsCol3 {
+    width: 10%;
+    height: 100%;
+}
+
+.reportOptionsCol4 {
+    width: 10%;
+    height: 100%;
+}
+
+.templateOptionsCol1 {
+    width: 35%;
+    height: 100%;
+    vertical-align: top;
+}
+
+.templateOptionsCol2 {
+    width: 50%;
+    height: 100%;
+    vertical-align: top;
+}
+
+.templateOptionsCol3 {
+    width: 20%;
+    height: 100%;
+    vertical-align: top;
+}
+
+
+.metricCol1 {
+    width: 15%;
+    vertical-align: top;
+}
+
+.metricCol2 {
+    width: 15%;
+    vertical-align: top;
+}
+
+.metricCol3 {
+    width: 35%;
+    vertical-align: top;
+}
+
+.metricCol4 {
+    width: 35%;
+    vertical-align: top;
+}
+
+.ui-widget-header {
+    background: none !important;
+    background-image: url("#{resource['images:GradientA.png']}") !important;
+    background-repeat: repeat-x !important;
+    font-size: 0.8em;
+/*    color: wheat !important;*/
+}
+
+.ui-corner-all {
+    -moz-border-radius: 0px 0px 0px 0px !important;
+}
+
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+    background: none !important;
+}
+
+.ui-picklist .ui-picklist-list {
+    width: 99% !important;
+}
+
+.ui-panel .ui-panel-titlebar {
+    padding-top: 0.2em !important;
+}
+
+.rf-sel-fld {
+    width: 100px !important;
+}
+
+.rf-edt-r-act {
+    font-weight: normal !important;
+}
+
+.rf-edt-r-sel {
+    background-color: #fbec88 !important;
+}
+
+.rf-edt-c-cnt {
+    padding-right: 7px !important;
+    padding-bottom: 1px !important;
+    padding-left: 7px !important;
+    padding-top: 2px !important;
+}
+
+.rf-p-b {
+    padding-right: 0px !important;
+}
+
+/*.rf-tb-cnt {
+    padding: 0px !important;
+}*/

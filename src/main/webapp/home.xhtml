@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<f:view contentType="text/html">
+    <h:head>
+        <title>
+            <ui:insert name="title">Pumpkin</ui:insert>
+        </title>
+        <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+        <script type="text/javascript" src="resources/js/jquery.scrollTo-1.4.2-min.js"/>
+        <style type="text/css">
+            .ui-widget {
+            font-size: 13px;
+            font-weight:bold;
+            }
+        </style>
+
+        <script type="text/javascript">
+            function handle(xhr, status, args) {
+            $('.log').append(args.data);
+            //alert($('.log').html().length);
+            init();
+            }
+            function init() {
+
+            var div = document.getElementById("myDiv");
+
+            // increase the scroll position by 10 px every 10th of a second
+            setInterval(function() {
+            // make sure it's not at the bottom
+            if (div.scrollTop &lt; (div.scrollHeight - div.clientHeight))
+            div.scrollTop += 10; // move down
+            }, 100); // 100 milliseconds
+
+            }
+            function clear() {
+            $('.log').html('');
+            }
+        </script>
+
+
+    </h:head>
+
+    <h:body>
+        <p:layout fullPage="true">
+
+            <p:layoutUnit id="left" position="west" size="250">
+                <h:form>
+
+                    <p:tree id="profiles" value="#{profilesBean.root}" var="node"
+                            selectionMode="single"
+                            selection="#{profilesBean.selectedNode}" expandedIcon="ui-icon ui-icon-folder-open"
+                            collapsedIcon="ui-icon ui-icon-folder-collapsed">
+
+                        <p:ajax onstart="clear()" event="select" update="form" listener="#{profilesBean.onNodeSelect}"/>
+                        <p:ajax onstart="clear()" event="expand" update="form" listener="#{profilesBean.onNodeExpand}"/>
+                        <p:ajax onstart="clear()" event="collapse" update="form"
+                                listener="#{profilesBean.onNodeCollapse}"/>
+                        <p:treeNode>
+                            <h:outputText value="#{node}"/>
+                        </p:treeNode>
+                    </p:tree>
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit id="center" position="center" size="30">
+                <h:form id="form">
+
+                    <p:panel header="Pumpkin multi log files viewer" rendered="#{!profilesBean.renderLog}">
+                        <h:panelGrid columns="3">
+                            <h:outputText value="Current version  : 0.9.1-SNAPSHOT"/>
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <p:ajaxStatus style="width:16px;height:16px;" rendered="#{profilesBean.renderLog}">
+                        <h3>#{profilesBean.recentProfileName}</h3>
+
+                        <h:panelGrid columns="3" cellpadding="1" rendered="#{profilesBean.renderLog}">
+                            <h:outputText
+                                    value="Comma separated watch words in the log (eg : ERROR,WARN) : "/>
+                            <p:inputText value="#{profilesBean.watchStrings}"/>
+                            <p:commandButton value="Save" actionListener="#{profilesBean.saveWatchStrings}"/>
+                        </h:panelGrid>
+
+
+                        <p:panel header="#{profilesBean.recentComponentName}" footer=""
+                                 rendered="#{profilesBean.renderLog}">
+                            <h:outputText styleClass="log" id="txt_count" value=""/>
+                        </p:panel>
+                    </p:ajaxStatus>
+
+                    <p:poll interval="3" listener="#{profilesBean.data}" oncomplete="handle(xhr, status, args)"/>
+
+                    <div id="myDiv" style="height:300px; overflow:auto;">
+                        <p></p>
+                    </div>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</f:view>
+</html>
+

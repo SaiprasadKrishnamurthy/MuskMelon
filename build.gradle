@@ -1,0 +1,83 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+defaultTasks 'clean', 'test','deploy'
+
+sourceCompatibility = 1.6
+
+repositories {
+    mavenCentral name: 'prime-repo', urls: ["http://repository.primefaces.org","http://repository.jboss.org/maven2","https://maven.atlassian.com/public/"]
+}
+project.httpPort = 8888
+
+configurations {
+    provided { transitive = true }
+}
+dependencies {
+groovy group: 'org.codehaus.groovy', name: 'groovy-all', version: '1.8.1'
+    compile(
+            //[group: 'org.primefaces', name: 'primefaces', version: '3.0.M3-SNAPSHOT'],
+            //[group: 'com.sun.faces', name: 'jsf-api', version: '2.0.3'],
+            //[group: 'com.sun.faces', name: 'jsf-impl', version: '2.0.3'],
+            [group: 'com.jcraft', name: 'jsch', version: '0.1.44-1'],
+            //[group: 'org.codehaus.jackson', name: 'jackson-jaxrs', version: '1.9.1'],
+            //[group: 'javax.annotation', name: 'jsr250-api', version: '1.0'],
+            //[group: 'org.primefaces.themes', name: 'trontastic', version: '1.0.2'],
+            //[group: 'com.sun.jersey', name: 'jersey-server', version: '1.4'],
+			[group: 'log4j', name: 'log4j', version: '1.2.15'],
+			[group: 'org.hibernate', name: 'hibernate-core', version: '3.3.2.GA'],
+			[group: 'org.hibernate', name: 'hibernate-annotations', version: '3.4.0.GA'],
+			[group: 'org.hibernate', name: 'hibernate-commons-annotations', version: '3.3.0.ga'],
+			[group: 'org.hibernate', name: 'hibernate-entitymanager', version: '3.4.0.GA'],
+			[group: 'org.hibernate', name: 'hibernate-commons-annotations', version: '3.3.0.ga'],
+			[group: 'commons-dbcp', name: 'commons-dbcp', version: '1.2.2'],
+			[group: 'org.springframework', name: 'spring-core', version: '3.0.5.RELEASE'],
+			[group: 'org.springframework', name: 'spring-beans', version: '3.0.5.RELEASE'],
+			[group: 'org.springframework', name: 'spring-context', version: '3.0.5.RELEASE'],
+			[group: 'org.springframework', name: 'spring-orm', version: '3.0.5.RELEASE'],
+			[group: 'org.springframework', name: 'spring-test', version: '3.0.5.RELEASE'],
+			[group: 'org.springframework', name: 'spring-web', version: '3.0.5.RELEASE'],
+			[group: 'hsqldb', name: 'hsqldb', version: '1.8.0.10'],
+			[group: 'org.slf4j', name: 'slf4j-api', version: '1.5.6'],
+			[group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.4.2'],
+			[group: 'oro', name: 'oro', version: '2.0.8'],
+			[group: 'javax.servlet', name: 'jstl', version: '1.2'],
+			[group: 'org.tmatesoft.svnkit', name: 'svnkit', version: '1.2.3.5521'],
+			[group: 'org.spockframework', name: 'spock-maven', version: '0.5-groovy-1.8'],
+			[group: 'com.atlassian.jira', name: 'jira-rest-java-client', version: '0.4']
+    )
+
+    providedCompile (
+            [group: 'javax.servlet', name: 'servlet-api', version: '2.5']
+    )
+
+    testCompile(
+            [group: 'junit', name: 'junit', version: '4.8.2'],
+            [group: 'org.mockito', name: 'mockito-all', version: '1.8.4'],
+            [group: 'org.jbehave', name: 'jbehave-ant', version: '3.0.3'],
+			
+    )
+}
+
+task deploy(dependsOn: 'war') << {
+    copy {
+        println "Deploying into ${System.getenv()["CATALINA_HOME"]}/webapps.."
+        from war.archivePath
+        into "${System.getenv()["CATALINA_HOME"]}/webapps"
+    }
+}
+
+task spec << {
+    ant.taskdef(
+        name: 'jbehave',
+        classname: 'org.jbehave.ant.RunStoriesAsEmbeddables',
+        classpath: configurations.jbehave.asPath)
+   
+    ant.jbehave(
+        includes: 'src/test/stories',
+       
+        generateViewAfterStories: true)
+}
